@@ -552,14 +552,31 @@ if (modoCocina) {
   <b>MESA {pedidoNumero}</b>
 
   {ticket.map((t, i) => (
-    <div key={i} className="border-b py-2 flex justify-between items-center">
+  <div key={i} className="border-b py-2 flex justify-between items-center">
 
-      <div>
-        {t.nombre}
-        <div className="text-xs">
-          {t.cantidad} x {t.precio}€
-        </div>
+    <div>
+      {t.nombre}
+
+      <div className="text-xs">
+        {t.cantidad} x {t.precio}€
       </div>
+
+      {/* 🔥 MODIFICACIONES */}
+      {(t.nota || t.aceite || t.gluten || t.verdura || t.carne || t.huevo || t.marisco) && (
+        <div className="text-[10px] text-gray-600 leading-tight mt-1">
+          {[
+            t.verdura && "NO VERDURA",
+            t.carne && "NO CARNE",
+            t.gluten && "SIN GLUTEN",
+            t.aceite && "ACEITE",
+            t.huevo && "NO HUEVO",
+            t.marisco && "ALERGIA MARISCO",
+            t.nota
+          ].filter(Boolean).join(" · ")}
+        </div>
+      )}
+
+    </div>
 
       <div className="flex gap-1">
         <button onClick={() => restar(t.ref)}>➖</button>
