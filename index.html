@@ -602,9 +602,35 @@ if (modoCocina) {
 
 </div>
 
-      {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
-  <div className="mb-3 space-y-2">
+      <input value={busqueda} onChange={e=>setBusqueda(e.target.value)} onKeyDown={(e)=>{ if(e.key==="Enter"){agregarArticulo(busqueda); setBusqueda("");}}} placeholder="Referencia..." className="w-full p-3 border rounded mb-4"/>
 
+      {lista.length > 0 && <div className="bg-white rounded shadow mb-4">{lista.map(([ref,a])=><div key={ref} onClick={()=>agregarArticulo(ref)} className="p-3 border-b">{a.nombre} - {a.precio}€</div>)}</div>}
+
+ <div className="bg-white p-4 rounded shadow">
+  <b>MESA {pedidoNumero}</b>
+
+  {ticket.map((t, i) => (
+  <div key={i} className="border-b py-2 flex justify-between items-center">
+
+    <div>
+      {t.nombre}
+
+      <div className="text-xs">
+        {t.cantidad} x {t.precio}€
+      </div>
+
+     {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
+  <div className="space-y-2 mb-4">
+
+    {/* DIRECCIÓN */}
+    <input
+      placeholder="📍 Dirección"
+      value={direccion}
+      onChange={e=>setDireccion(e.target.value)}
+      className="w-full p-3 border rounded"
+    />
+
+    {/* TELÉFONO */}
     <input
       placeholder="📞 Teléfono"
       value={telefono}
@@ -612,6 +638,7 @@ if (modoCocina) {
       className="w-full p-3 border rounded"
     />
 
+    {/* TIEMPO */}
     <select
       value={tiempo}
       onChange={e=>setTiempo(e.target.value)}
@@ -630,32 +657,8 @@ if (modoCocina) {
       <option>1h 30min</option>
     </select>
 
-    <input
-      placeholder="📍 Dirección"
-      value={direccion}
-      onChange={e=>setDireccion(e.target.value)}
-      className="w-full p-3 border rounded"
-    />
-
   </div>
 )}
-
-      <input value={busqueda} onChange={e=>setBusqueda(e.target.value)} onKeyDown={(e)=>{ if(e.key==="Enter"){agregarArticulo(busqueda); setBusqueda("");}}} placeholder="Referencia..." className="w-full p-3 border rounded mb-4"/>
-
-      {lista.length > 0 && <div className="bg-white rounded shadow mb-4">{lista.map(([ref,a])=><div key={ref} onClick={()=>agregarArticulo(ref)} className="p-3 border-b">{a.nombre} - {a.precio}€</div>)}</div>}
-
- <div className="bg-white p-4 rounded shadow">
-  <b>MESA {pedidoNumero}</b>
-
-  {ticket.map((t, i) => (
-  <div key={i} className="border-b py-2 flex justify-between items-center">
-
-    <div>
-      {t.nombre}
-
-      <div className="text-xs">
-        {t.cantidad} x {t.precio}€
-      </div>
 
       {/* 🔥 MODIFICACIONES */}
    {(t.nota || t.aceite || t.gluten || t.verdura || t.carne || t.huevo || t.marisco) && (
