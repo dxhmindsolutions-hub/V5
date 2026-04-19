@@ -260,9 +260,7 @@ if (modoCocina) {
     <div id="cocina" className="p-4 bg-white font-mono">
 
       {/* CABECERA */}
-      <div className="text-center text-2xl font-bold">
-        🍳 COMANDA
-      </div>
+   
 
       <div className="text-center my-2">
         -----------------------------
@@ -274,18 +272,6 @@ if (modoCocina) {
   {tipoPedido === "llevar" && "🥡 LLEVAR"}
   {tipoPedido === "recoger" && "🚶 RECOGER"}
 </div>
-
-      {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
-  <div className="text-center text-xl font-bold mt-1">
-    📞 {telefono}
-  </div>
-)}
-
-{(tipoPedido === "llevar" || tipoPedido === "recoger") && (
-  <div className="text-center text-xl font-bold">
-    ⏱ {tiempo} min
-  </div>
-)}
 
       {(tipoPedido === "llevar" || tipoPedido === "recoger") && direccion && (
   <div className="text-center text-sm mt-1">
@@ -352,6 +338,25 @@ if (modoCocina) {
       <div className="text-center my-2">
         -----------------------------
       </div>
+
+      {/* DATOS PEDIDO (SOLO LLEVAR/RECOGER) */}
+{(tipoPedido === "llevar" || tipoPedido === "recoger") && (
+  <div className="text-sm mt-2 space-y-1">
+
+    {telefono && (
+      <div>📞 {telefono}</div>
+    )}
+
+    {direccion && (
+      <div>📍 {direccion}</div>
+    )}
+
+    {tiempo && (
+      <div>⏱ {tiempo}</div>
+    )}
+
+  </div>
+)}
 
       {/* BOTONES */}
       <div className="flex gap-2 mt-4">
