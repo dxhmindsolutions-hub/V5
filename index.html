@@ -269,8 +269,8 @@ if (modoCocina) {
       {/* MESA GRANDE */}
       <div className="text-center text-3xl font-bold">
   {tipoPedido === "comer" && `MESA ${pedidoNumero}`}
-  {tipoPedido === "llevar" && "🥡 LLEVAR"}
-  {tipoPedido === "recoger" && "🚶 RECOGER"}
+  {tipoPedido === "llevar" && `🥡 LLEVAR ${pedidoNumero}`}
+  {tipoPedido === "recoger" && `🚶 RECOGER ${pedidoNumero}`}
 </div>
 
  {(tipoPedido === "llevar" || tipoPedido === "recoger") && tiempo && (
