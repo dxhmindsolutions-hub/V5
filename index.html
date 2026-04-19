@@ -341,14 +341,14 @@ if (modoCocina) {
 
       {/* DATOS PEDIDO (SOLO LLEVAR/RECOGER) */}
 {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
-  <div className="text-sm mt-2 space-y-1">
-
-    {telefono && (
-      <div>📞 {telefono}</div>
-    )}
+  <div className="text-lg mt-2 space-y-1 font-semibold">
 
     {direccion && (
       <div>📍 {direccion}</div>
+    )}
+
+    {telefono && (
+      <div>📞 {telefono}</div>
     )}
 
   </div>
