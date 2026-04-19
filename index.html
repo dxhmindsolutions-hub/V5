@@ -273,9 +273,9 @@ if (modoCocina) {
   {tipoPedido === "recoger" && "🚶 RECOGER"}
 </div>
 
-      {(tipoPedido === "llevar" || tipoPedido === "recoger") && direccion && (
-  <div className="text-center text-sm mt-1">
-    📍 {direccion}
+ {(tipoPedido === "llevar" || tipoPedido === "recoger") && tiempo && (
+  <div className="text-center text-xl font-bold mt-1">
+    ⏱ {tiempo}
   </div>
 )}
 
@@ -349,10 +349,6 @@ if (modoCocina) {
 
     {direccion && (
       <div>📍 {direccion}</div>
-    )}
-
-    {tiempo && (
-      <div>⏱ {tiempo}</div>
     )}
 
   </div>
