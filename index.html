@@ -39,10 +39,13 @@ function POSApp() {
   const [nuevo, setNuevo] = useState({ ref:"", nombre:"", precio:"", categoria:"" });
   const [editando, setEditando] = useState(null);
   const [busquedaGestion, setBusquedaGestion] = useState("");
-
 const [productoEditando, setProductoEditando] = useState(null);
 const [notaTemp, setNotaTemp] = useState("");
+const [tipoPedido, setTipoPedido] = useState("comer");
+const [telefono, setTelefono] = useState("");
+const [tiempo, setTiempo] = useState("");
 const [checksTemp, setChecksTemp] = useState({
+  
   aceite: false,
   gluten: false,
   verdura: false,
@@ -99,6 +102,13 @@ setArticulos(data);
     localStorage.setItem("articulos", JSON.stringify(articulos));
   }, [articulos]);
 
+  useEffect(()=>{
+  if(tipoPedido === "comer"){
+    setTelefono("");
+    setTiempo("");
+  }
+},[tipoPedido]);
+  
   // AGREGAR ARTÍCULO
   const agregarArticulo = (ref) => {
   if (!pedidoNumero) return alert("Introduce mesa");
@@ -258,8 +268,22 @@ if (modoCocina) {
 
       {/* MESA GRANDE */}
       <div className="text-center text-3xl font-bold">
-        MESA {pedidoNumero}
-      </div>
+  {tipoPedido === "comer" && `MESA ${pedidoNumero}`}
+  {tipoPedido === "llevar" && "🥡 LLEVAR"}
+  {tipoPedido === "recoger" && "🚶 RECOGER"}
+</div>
+
+      {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
+  <div className="text-center text-xl font-bold mt-1">
+    📞 {telefono}
+  </div>
+)}
+
+{(tipoPedido === "llevar" || tipoPedido === "recoger") && (
+  <div className="text-center text-xl font-bold">
+    ⏱ {tiempo} min
+  </div>
+)}
 
       {/* HORA */}
       <div className="text-center text-sm mb-2">
@@ -543,6 +567,48 @@ if (modoCocina) {
         <input placeholder="Mesa" value={pedidoNumero} onChange={e=>setPedidoNumero(e.target.value)} className="w-1/2 p-3 border rounded"/>
         <input placeholder="Comensales" value={comensales} onChange={e=>setComensales(e.target.value)} className="w-1/2 p-3 border rounded"/>
       </div>
+
+      <div className="flex gap-2 mb-3">
+
+  <button
+    onClick={()=>setTipoPedido("comer")}
+    className={`w-1/3 p-2 rounded ${tipoPedido==="comer" ? "bg-black text-white" : "bg-gray-200"}`}
+  >
+    🍽️ Comer
+  </button>
+
+  <button
+    onClick={()=>setTipoPedido("llevar")}
+    className={`w-1/3 p-2 rounded ${tipoPedido==="llevar" ? "bg-black text-white" : "bg-gray-200"}`}
+  >
+    🥡 Llevar
+  </button>
+
+  <button
+    onClick={()=>setTipoPedido("recoger")}
+    className={`w-1/3 p-2 rounded ${tipoPedido==="recoger" ? "bg-black text-white" : "bg-gray-200"}`}
+  >
+    🚶 Recoger
+  </button>
+
+</div>
+
+      {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
+  <div className="flex gap-2 mb-3">
+    <input
+      placeholder="Teléfono"
+      value={telefono}
+      onChange={e=>setTelefono(e.target.value)}
+      className="w-1/2 p-3 border rounded"
+    />
+    <input
+      placeholder="Minutos"
+      value={tiempo}
+      onChange={e=>setTiempo(e.target.value)}
+      className="w-1/2 p-3 border rounded"
+    />
+  </div>
+)}
 
       <input value={busqueda} onChange={e=>setBusqueda(e.target.value)} onKeyDown={(e)=>{ if(e.key==="Enter"){agregarArticulo(busqueda); setBusqueda("");}}} placeholder="Referencia..." className="w-full p-3 border rounded mb-4"/>
 
