@@ -338,13 +338,12 @@ if (modoCocina) {
     </div>
   ))
 }
-      <div className="text-center my-2">
-        -----------------------------
-      </div>
+     <div className="text-center my-2">
+  -----------------------------
+</div>
 
-      {/* DATOS CLIENTE ABAJO */}
 {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
-  <div className="mt-3 text-left">
+  <div className="mt-3">
 
     {direccion && (
       <div className="text-xl font-bold">
@@ -355,6 +354,12 @@ if (modoCocina) {
     {telefono && (
       <div className="text-xl font-bold">
         📞 {telefono}
+      </div>
+    )}
+
+    {metodoPago && (
+      <div className="text-xl font-bold">
+        💳 {metodoPago}
       </div>
     )}
 
