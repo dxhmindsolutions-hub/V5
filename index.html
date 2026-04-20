@@ -686,10 +686,9 @@ if (modoCocina) {
   )}
 </div>
 
-      {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
+    {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
   <div className="space-y-2 mb-4">
 
-    {/* DIRECCIÓN */}
     <input
       placeholder="📍 Dirección"
       value={direccion}
@@ -697,7 +696,6 @@ if (modoCocina) {
       className="w-full p-3 border rounded"
     />
 
-    {/* TELÉFONO */}
     <input
       placeholder="📞 Teléfono"
       value={telefono}
@@ -705,7 +703,6 @@ if (modoCocina) {
       className="w-full p-3 border rounded"
     />
 
-    {/* TIEMPO */}
     <select
       value={tiempo}
       onChange={e=>setTiempo(e.target.value)}
@@ -720,37 +717,36 @@ if (modoCocina) {
       <option>50 min</option>
       <option>1h</option>
       <option>1h 10min</option>
+      <option>1h 15min</option>
       <option>1h 20min</option>
       <option>1h 30min</option>
     </select>
 
-  </div>
+    {/* 🔥 BOTONES DENTRO */}
+    <div className="flex gap-2">
 
-      <div className="flex gap-2">
+      <button
+        onClick={()=>setMetodoPago("EFECTIVO")}
+        className={`w-1/2 p-2 rounded ${
+          metodoPago === "EFECTIVO" ? "bg-green-600 text-white" : "bg-gray-200"
+        }`}
+      >
+        💵 Efectivo
+      </button>
 
-  <button
-    onClick={()=>setMetodoPago("EFECTIVO")}
-    className={`w-1/2 p-2 rounded ${
-      metodoPago === "EFECTIVO" ? "bg-green-600 text-white" : "bg-gray-200"
-    }`}
-  >
-    💵 Efectivo
-  </button>
-
-  <button
-    onClick={()=>setMetodoPago("VISA")}
-    className={`w-1/2 p-2 rounded ${
-      metodoPago === "VISA" ? "bg-blue-600 text-white" : "bg-gray-200"
-    }`}
-  >
-    💳 Visa
+      <button
+        onClick={()=>setMetodoPago("VISA")}
+        className={`w-1/2 p-2 rounded ${
+          metodoPago === "VISA" ? "bg-blue-600 text-white" : "bg-gray-200"
+        }`}
+      >
+        💳 Visa
       </button>
 
     </div>
 
   </div>
 )}
-
       {/* 🔥 MODAL NOTAS */}
       {productoEditando && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
