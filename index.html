@@ -266,6 +266,25 @@ if (modoCocina) {
         -----------------------------
       </div>
 
+      {/* DATOS CLIENTE ABAJO */}
+{(tipoPedido === "llevar" || tipoPedido === "recoger") && (
+  <div className="mt-3 text-left">
+
+    {direccion && (
+      <div className="text-xl font-bold">
+        📍 {direccion}
+      </div>
+    )}
+
+    {telefono && (
+      <div className="text-xl font-bold">
+        📞 {telefono}
+      </div>
+    )}
+
+  </div>
+)}
+
       {/* MESA GRANDE */}
       <div className="text-center text-3xl font-bold">
   {tipoPedido === "comer" && `MESA ${pedidoNumero}`}
