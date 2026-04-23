@@ -309,12 +309,12 @@ if (modoCocina) {
 
       {/* LINEA PRINCIPAL */}
       <div className="flex items-end gap-2">
-        <div className="text-3xl font-extrabold whitespace-nowrap">
+        <div className="text-2xl font-bold whitespace-nowrap">
           {t.cantidad} x {t.ref}
         </div>
 
         {(t.verdura || t.carne || t.gluten || t.aceite || t.huevo || t.marisco || t.nota) && (
-          <div className="text-xl font-black leading-tight">
+          <div className="text-lg font-bold leading-tight">
             {[
               t.verdura && "NO VERDURA",
               t.carne && "NO CARNE",
