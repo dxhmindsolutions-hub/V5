@@ -575,11 +575,6 @@ if (modoCocina) {
       </div>
 
       <div className="flex gap-2 mb-3">
-        <input placeholder="Mesa" value={pedidoNumero} onChange={e=>setPedidoNumero(e.target.value)} className="w-1/2 p-3 border rounded"/>
-        <input placeholder="Comensales" value={comensales} onChange={e=>setComensales(e.target.value)} className="w-1/2 p-3 border rounded"/>
-      </div>
-
-      <div className="flex gap-2 mb-3">
 
   <button
     onClick={()=>setTipoPedido("comer")}
@@ -603,6 +598,11 @@ if (modoCocina) {
   </button>
 
 </div>
+
+      <div className="flex gap-2 mb-3">
+        <input placeholder="Mesa" value={pedidoNumero} onChange={e=>setPedidoNumero(e.target.value)} className="w-1/2 p-3 border rounded"/>
+        <input placeholder="Comensales" value={comensales} onChange={e=>setComensales(e.target.value)} className="w-1/2 p-3 border rounded"/>
+      </div>
 
       <input value={busqueda} onChange={e=>setBusqueda(e.target.value)} onKeyDown={(e)=>{ if(e.key==="Enter"){agregarArticulo(busqueda); setBusqueda("");}}} placeholder="Referencia..." className="w-full p-3 border rounded mb-4"/>
 
