@@ -397,59 +397,54 @@ if (modoCocina) {
     if (!esBebida(a) && esBebida(b)) return -1;
     return 0;
   })
-.map((t, i) => {
+  .map((t, i) => {
 
-  // 🔥 TITULO MENU
-  if (t.tituloMenu) {
+    if (t.tituloMenu) {
+      return (
+        <div key={i} className="text-xl font-bold mt-2">
+          {t.tituloMenu}
+        </div>
+      );
+    }
+
+    if (t.separador) {
+      return (
+        <div key={i} className="border-t border-black my-1"></div>
+      );
+    }
+
     return (
-      <div key={i} className="text-xl font-bold mt-2">
-        {t.tituloMenu}
-      </div>
-    );
-  }
+      <div key={i} className="mb-1">
 
-  // 🔥 LINEA SEPARADORA
-  if (t.separador) {
-    return (
-      <div key={i} className="border-t border-black my-1"></div>
-    );
-  }
+        <div className="flex items-end gap-2">
+          <div className="text-2xl font-bold whitespace-nowrap">
+            {t.cantidad} x {t.ref}
+          </div>
 
-  return (
-    <div key={i} className="mb-1">
-
-      {/* LINEA PRINCIPAL */}
-      <div className="flex items-end gap-2">
-        <div className="text-2xl font-bold whitespace-nowrap">
-          {t.cantidad} x {t.ref}
+          {(t.verdura || t.carne || t.gluten || t.aceite || t.huevo || t.marisco || t.nota) && (
+            <div className="text-lg font-bold leading-tight">
+              {[
+                t.verdura && "NO VERDURA",
+                t.carne && "NO CARNE",
+                t.gluten && "NO GLUTEN",
+                t.aceite && "ACEITE",
+                t.huevo && "NO HUEVO",
+                t.marisco && "ALERGIA MARISCO",
+                t.nota
+              ].filter(Boolean).join(" / ")}
+            </div>
+          )}
         </div>
 
-        {(t.verdura || t.carne || t.gluten || t.aceite || t.huevo || t.marisco || t.nota) && (
-          <div className="text-lg font-bold leading-tight">
-            {[
-              t.verdura && "NO VERDURA",
-              t.carne && "NO CARNE",
-              t.gluten && "NO GLUTEN",
-              t.aceite && "ACEITE",
-              t.huevo && "NO HUEVO",
-              t.marisco && "ALERGIA MARISCO",
-              t.nota
-            ].filter(Boolean).join(" / ")}
-          </div>
-        )}
+        <div className="text-xs leading-none">
+          {t.nombre?.toUpperCase()}
+        </div>
+
+        <div className="border-b border-dashed border-black mt-1"></div>
+
       </div>
-
-      {/* NOMBRE */}
-      <div className="text-xs leading-none">
-        {t.nombre?.toUpperCase()}
-      </div>
-
-      <div className="border-b border-dashed border-black mt-1"></div>
-
-    </div>
-  );
-})
-   
+    );
+  })}
 
 {(tipoPedido === "llevar" || tipoPedido === "recoger") && (
   <div className="mt-3 text-xl font-bold">
