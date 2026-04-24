@@ -48,6 +48,7 @@ function POSApp() {
   const [articulos, setArticulos] = useState({});
   const [ticket, setTicket] = useState([]);
   const [categoriaActiva, setCategoriaActiva] = useState(null);
+  const [listaAbierta, setListaAbierta] = useState(true);
   const [pedidoNumero, setPedidoNumero] = useState("");
   const [comensales, setComensales] = useState("");
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -645,9 +646,24 @@ if (modoCocina) {
         <input placeholder="Comensales" value={comensales} onChange={e=>setComensales(e.target.value)} className="w-1/2 p-3 border rounded"/>
       </div>
 
+     
       <input value={busqueda} onChange={e=>setBusqueda(e.target.value)} onKeyDown={(e)=>{ if(e.key==="Enter"){agregarArticulo(busqueda); setBusqueda("");}}} placeholder="Referencia..." className="w-full p-3 border rounded mb-4"/>
+      
+{categoriaActiva && (
+  <div className="flex justify-between items-center mb-2">
+    <div className="font-bold">
+      {categoriaActiva}
+    </div>
 
-   {lista.length > 0 && (
+    <button
+      onClick={() => setListaAbierta(!listaAbierta)}
+      className="text-sm bg-black text-white px-2 py-1 rounded"
+    >
+      {listaAbierta ? "⬆️ Ocultar" : "⬇️ Mostrar"}
+    </button>
+  </div>
+)}
+   {lista.length > 0 && listaAbierta && (
   <div className="bg-white rounded shadow mb-4">
     {lista.map(([ref, a]) => (
       <div
