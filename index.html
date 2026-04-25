@@ -321,50 +321,29 @@ const guardarArticulo = () => {
 
   ticket.forEach(t => {
 
-    // 🔥 SI ES MENÚ
+    // 🔥 MENÚ → FORMATO CORTO
     if (MENUS[t.ref]) {
+
       const menu = MENUS[t.ref];
 
-      // 👉 (opcional) nombre del menú arriba
+      const refs = [
+        ...menu.primeros,
+        ...menu.segundos
+      ].map(r => `${t.cantidad}x${r}`).join(" ");
+
       resultado.push({
-        tituloMenu: t.nombre
+        esMenu: true,
+        texto: `${t.cantidad} x ${t.nombre} → ${refs}`
       });
 
-      // 👉 PRIMEROS
-      menu.primeros.forEach(ref => {
-        const art = articulos[ref];
-        if (art) {
-          resultado.push({
-            ...art,
-            ref,
-            cantidad: t.cantidad
-          });
-        }
-      });
-
-      // 👉 SEPARADOR
-      resultado.push({
-        separador: true
-      });
-
-      // 👉 SEGUNDOS
-      menu.segundos.forEach(ref => {
-        const art = articulos[ref];
-        if (art) {
-          resultado.push({
-            ...art,
-            ref,
-            cantidad: t.cantidad
-          });
-        }
-      });
-
-    } else {
-      // 🔹 PRODUCTO NORMAL
-      resultado.push({
-        ...t,
-        categoria: articulos[t.ref]?.categoria || ""
-      });
+    } 
+    // 🔹 IGNORAR HIJOS DEL MENÚ
+    else if (t.esHijoMenu) {
+      return;
+    }
+    // 🔹 PRODUCTO NORMAL
+    else {
+      resultado.push(t);
     }
 
   });
@@ -434,7 +413,16 @@ if (modoCocina) {
     if (!esBebida(a) && esBebida(b)) return -1;
     return 0;
   })
+  
   .map((t, i) => {
+    
+    if (t.esMenu) {
+  return (
+    <div key={i} className="text-2xl font-bold mb-2">
+      {t.texto}
+    </div>
+  );
+}
 
     if (t.tituloMenu) {
       return (
