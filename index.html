@@ -796,7 +796,10 @@ if (modoCocina) {
       ...MENUS[t.ref].primeros,
       ...MENUS[t.ref].segundos
     ]
-      .map(r => `${r}`)
+     .map(r => {
+  const mod = t.mods?.[r];
+  return `${r}${mod ? " (" + mod + ")" : ""}`;
+})
       .join(" · ")}
   </div>
 )}
