@@ -326,18 +326,19 @@ const guardarArticulo = () => {
 
       const menu = MENUS[t.ref];
 
-   const refs = [
+ const refs = [
   ...menu.primeros,
   ...menu.segundos
 ].map(r => {
   const mod = t.mods?.[r];
-  return `${t.cantidad}x${r}${mod ? "(" + mod + ")" : ""}`;
-}).join(" ");
+  return `${t.cantidad}x${r}${mod ? " (" + mod + ")" : ""}`;
+});
 
       resultado.push({
-        esMenu: true,
-        texto: `${t.cantidad} x ${t.nombre} → ${refs}`
-      });
+  esMenu: true,
+  nombre: `${t.cantidad} x ${t.nombre}`,
+  lineas: refs
+});
 
     } 
 
@@ -416,10 +417,22 @@ if (modoCocina) {
   
   .map((t, i) => {
     
-    if (t.esMenu) {
+  if (t.esMenu) {
   return (
-    <div key={i} className="text-2xl font-bold mb-2">
-      {t.texto}
+    <div key={i} className="mb-2">
+
+      {/* TITULO MENU */}
+      <div className="text-2xl font-bold">
+        {t.nombre}
+      </div>
+
+      {/* LINEAS DEL MENU */}
+      <div className="text-xl font-bold pl-6 leading-tight">
+        {t.lineas.map((l, idx) => (
+          <div key={idx}>{l}</div>
+        ))}
+      </div>
+
     </div>
   );
 }
