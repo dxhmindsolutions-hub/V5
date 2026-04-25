@@ -140,33 +140,33 @@ setArticulos(data);
 
   // 🔥 ARTÍCULO PERSONALIZADO
   if (ref === "0") {
-    // 🔥 SI ES MENÚ → EXPANDIR
+  // 🔥 SI ES MENÚ → AÑADIR MENÚ + HIJOS
 if (MENUS[ref]) {
   const menu = MENUS[ref];
+
+  // 👉 Añadir el menú principal
+  const itemMenu = articulos[ref];
   let nuevos = [];
 
-  // PRIMEROS
-  menu.primeros.forEach(r => {
-    const art = articulos[r];
-    if (art) {
-      nuevos.push({
-        ref: r,
-        ...art,
-        cantidad: 1,
-        esMenu: ref // 👈 importante
-      });
-    }
-  });
+  if (itemMenu) {
+    nuevos.push({
+      ref,
+      ...itemMenu,
+      cantidad: 1,
+      esMenuPadre: true
+    });
+  }
 
-  // SEGUNDOS
-  menu.segundos.forEach(r => {
+  // 👉 Añadir platos hijos
+  [...menu.primeros, ...menu.segundos].forEach(r => {
     const art = articulos[r];
     if (art) {
       nuevos.push({
         ref: r,
         ...art,
         cantidad: 1,
-        esMenu: ref
+        esHijoMenu: true,
+        menuPadre: ref
       });
     }
   });
@@ -817,52 +817,67 @@ if (modoCocina) {
   </div>
 )}
 
-     {ticket.map((t, i) => (
-  <div key={i} className="border-b py-2">
+  {ticket.map((t, i) => {
 
-    {/* CONTENIDO PRINCIPAL */}
-    <div className="flex justify-between items-start">
+  // 🔥 NO mostrar hijos sueltos
+  if (t.esHijoMenu) return null;
 
-      {/* IZQUIERDA */}
-      <div className="flex-1">
+  return (
+    <div key={i} className="border-b py-2">
 
-        <div className="font-bold">
-          {t.cantidad} x {t.nombre}
+      {/* PRINCIPAL */}
+      <div className="flex justify-between items-start">
+
+        <div className="flex-1">
+
+          <div className="font-bold">
+            {t.cantidad} x {t.nombre}
+          </div>
+
+          {/* 🔥 HIJOS DEL MENÚ (ESTILO MODIFICACIONES) */}
+          {t.esMenuPadre && (
+            <div className="text-[10px] text-blue-600 font-semibold">
+              {ticket
+                .filter(h => h.menuPadre === t.ref)
+                .map(h => h.nombre.toUpperCase())
+                .join(" · ")}
+            </div>
+          )}
+
+          {/* MODIFICACIONES NORMALES */}
+          {(t.nota || t.aceite || t.gluten || t.verdura || t.carne || t.huevo || t.marisco) && (
+            <div className="text-[10px] text-orange-600 font-semibold">
+              {[
+                t.verdura && "NO VERDURA",
+                t.carne && "NO CARNE",
+                t.gluten && "SIN GLUTEN",
+                t.aceite && "ACEITE",
+                t.huevo && "NO HUEVO",
+                t.marisco && "ALERGIA MARISCO",
+                t.nota
+              ].filter(Boolean).join(" · ")}
+            </div>
+          )}
+
         </div>
 
-        {(t.nota || t.aceite || t.gluten || t.verdura || t.carne || t.huevo || t.marisco) && (
-          <div className="text-[10px] text-orange-600 font-semibold">
-            {[
-              t.verdura && "NO VERDURA",
-              t.carne && "NO CARNE",
-              t.gluten && "SIN GLUTEN",
-              t.aceite && "ACEITE",
-              t.huevo && "NO HUEVO",
-              t.marisco && "ALERGIA MARISCO",
-              t.nota
-            ].filter(Boolean).join(" · ")}
-          </div>
-        )}
+        <div className="font-mono">
+          {(t.precio * t.cantidad).toFixed(2)}€
+        </div>
 
       </div>
 
-      {/* DERECHA PRECIO */}
-      <div className="font-mono">
-        {(t.precio * t.cantidad).toFixed(2)}€
+      {/* BOTONES */}
+      <div className="flex gap-1 mt-2">
+        <button onClick={() => restar(t.ref)}>➖</button>
+        <button onClick={() => sumar(t.ref)}>➕</button>
+        <button onClick={() => eliminarLinea(t.ref)}>❌</button>
+        <button onClick={() => editarNota(t)}>📝</button>
       </div>
 
     </div>
-
-    {/* BOTONES */}
-    <div className="flex gap-1 mt-2">
-      <button onClick={() => restar(t.ref)}>➖</button>
-      <button onClick={() => sumar(t.ref)}>➕</button>
-      <button onClick={() => eliminarLinea(t.ref)}>❌</button>
-      <button onClick={() => editarNota(t)}>📝</button>
-    </div>
-
-  </div>
-))}
+  );
+})}
       
   <div className="border-t mt-2 pt-2 flex justify-between font-bold">
     <span>Total</span>
