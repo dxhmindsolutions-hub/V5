@@ -55,6 +55,7 @@ function POSApp() {
   const [modoGestion, setModoGestion] = useState(false);
   const [modoTicket, setModoTicket] = useState(false);
   const [modoCocina, setModoCocina] = useState(false);
+  const [subMenuEditando, setSubMenuEditando] = useState(null);
   const [tipoPedido, setTipoPedido] = useState("comer"); // comer | llevar | recoger
  const [telefono, setTelefono] = useState("");
  const [direccion, setDireccion] = useState("");
@@ -68,6 +69,7 @@ function POSApp() {
 const [productoEditando, setProductoEditando] = useState(null);
 const [notaTemp, setNotaTemp] = useState("");
 const [checksTemp, setChecksTemp] = useState({
+  
   
   aceite: false,
   gluten: false,
@@ -228,22 +230,18 @@ setArticulos(data);
   });
 };
 
-  const editarSubMenu = (menuRef, subRef) => {
-  const texto = prompt(`Modificar plato ${subRef}:`);
-  if (!texto) return;
+const editarSubMenu = (menuRef, subRef) => {
+  setSubMenuEditando({ menuRef, subRef });
 
-  setTicket(ticket.map(t => {
-    if (t.ref === menuRef && t.esMenuPadre) {
-      return {
-        ...t,
-        mods: {
-          ...t.mods,
-          [subRef]: texto.toUpperCase()
-        }
-      };
-    }
-    return t;
-  }));
+  setNotaTemp("");
+  setChecksTemp({
+    aceite: false,
+    gluten: false,
+    verdura: false,
+    carne: false,
+    huevo: false,
+    marisco: false
+  });
 };
 
   // GESTIÓN
@@ -1070,6 +1068,89 @@ if (modoCocina) {
           </div>
         </div>
       )}
+
+      {subMenuEditando && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="bg-white p-4 rounded-xl w-80">
+
+      <div className="font-bold mb-2">
+        MODIFICAR {subMenuEditando.subRef}
+      </div>
+
+      <input
+        placeholder="NOTA..."
+        value={notaTemp}
+        onChange={e => setNotaTemp(e.target.value)}
+        className="w-full border p-2 mb-3"
+      />
+
+      {[
+        ["aceite", "ACEITE"],
+        ["gluten", "SIN GLUTEN"],
+        ["verdura", "NO VERDURA"],
+        ["carne", "NO CARNE"],
+        ["huevo", "NO HUEVO"],
+        ["marisco", "ALERGIA MARISCO"]
+      ].map(([key, label]) => (
+        <div key={key} className="flex justify-between items-center mb-1">
+          <span>{label}</span>
+          <input
+            type="checkbox"
+            checked={checksTemp[key]}
+            onChange={() =>
+              setChecksTemp({
+                ...checksTemp,
+                [key]: !checksTemp[key]
+              })
+            }
+          />
+        </div>
+      ))}
+
+      <div className="flex gap-2 mt-4">
+        <button
+          onClick={() => {
+            const texto = [
+              checksTemp.verdura && "SIN VERDURA",
+              checksTemp.carne && "SIN CARNE",
+              checksTemp.gluten && "SIN GLUTEN",
+              checksTemp.aceite && "SIN ACEITE",
+              checksTemp.huevo && "SIN HUEVO",
+              checksTemp.marisco && "SIN MARISCO",
+              notaTemp
+            ].filter(Boolean).join(" ");
+
+            setTicket(ticket.map(t => {
+              if (t.ref === subMenuEditando.menuRef && t.esMenuPadre) {
+                return {
+                  ...t,
+                  mods: {
+                    ...t.mods,
+                    [subMenuEditando.subRef]: texto.toUpperCase()
+                  }
+                };
+              }
+              return t;
+            }));
+
+            setSubMenuEditando(null);
+          }}
+          className="w-1/2 bg-green-600 text-white p-2 rounded"
+        >
+          GUARDAR
+        </button>
+
+        <button
+          onClick={() => setSubMenuEditando(null)}
+          className="w-1/2 bg-gray-400 text-white p-2 rounded"
+        >
+          CANCELAR
+        </button>
+      </div>
+
+    </div>
+  </div>
+)}
 
     </div>
   );
