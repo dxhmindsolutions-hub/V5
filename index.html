@@ -868,8 +868,7 @@ if (modoCocina) {
     {t.esMenuPadre && (
   <div className="text-[10px] text-blue-600 font-semibold flex flex-wrap gap-1">
     {[
-      ...MENUS[t.ref].primeros,
-      ...MENUS[t.ref].segundos
+    Object.keys(MENUS[t.ref].items).map(r => {
     ].map(r => {
       const mod = t.mods?.[r];
 
