@@ -868,20 +868,19 @@ if (modoCocina) {
     {t.esMenuPadre && (
   <div className="text-[10px] text-blue-600 font-semibold flex flex-wrap gap-1">
     {[
-    Object.keys(MENUS[t.ref].items).map(r => {
-    ].map(r => {
-      const mod = t.mods?.[r];
+  {Object.keys(MENUS[t.ref].items).map(r => {
+  const mod = t.mods?.[r];
 
-      return (
-        <span
-          key={r}
-          onClick={() => editarSubMenu(t.ref, r)}
-          className="cursor-pointer"
-        >
-          {r}{mod ? ` (${mod})` : ""}
-        </span>
-      );
-    })}
+  return (
+    <span
+      key={r}
+      onClick={() => editarSubMenu(t.ref, r)}
+      className="cursor-pointer"
+    >
+      {r}{mod ? ` (${mod})` : ""}
+    </span>
+  );
+})}
   </div>
 )}
 
