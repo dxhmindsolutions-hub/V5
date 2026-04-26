@@ -420,7 +420,7 @@ if (modoCocina) {
   
   .map((t, i) => {
     
-  if (t.esMenu) {
+ if (t.esMenu) {
   return (
     <div key={i} className="mb-2">
 
@@ -429,19 +429,23 @@ if (modoCocina) {
         {t.nombre}
       </div>
 
- {/* LINEAS DEL MENU */}
-<div className="text-xl font-bold pl-6 leading-tight">
-  {t.lineas.map((l, idx) => (
-    <div key={idx}>
-      {l.split("\n").map((linea, i) => (
-        <div key={i} className={i > 0 ? "pl-6" : ""}>
-          {linea}
-        </div>
-      ))}
-    </div>
-  ))}
-</div>
+      {/* LINEAS DEL MENU */}
+      <div className="text-xl font-bold pl-6 leading-tight">
+        {t.lineas.map((l, idx) => (
+          <div key={idx}>
+            {l.split("\n").map((linea, i) => (
+              <div key={i} className={i > 0 ? "pl-6" : ""}>
+                {linea}
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
 
+    </div>
+  );
+}
+// 🔹 PRODUCTO NORMAL
     return (
       <div key={i} className="mb-1">
 
