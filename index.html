@@ -334,7 +334,15 @@ const guardarArticulo = () => {
   ...menu.segundos
 ].map(r => {
   const mod = t.mods?.[r];
-  return `${t.cantidad}x${r}${mod ? " (" + mod + ")" : ""}`;
+
+  if (!mod) return `${t.cantidad}x${r}`;
+
+  const lineas = mod.split("\n");
+
+  return [
+    `${t.cantidad}x${r}  ${lineas[0]}`,
+    ...lineas.slice(1).map(l => `      ${l}`)
+  ].join("\n");
 });
 
       resultado.push({
