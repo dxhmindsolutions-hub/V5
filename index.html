@@ -858,6 +858,57 @@ if (modoCocina) {
     
     <div className="flex items-start justify-between">
 
+  {/* IZQUIERDA */}
+  <div className="flex flex-col flex-1">
+
+    {/* FILA SUPERIOR */}
+    <div className="flex items-center justify-between">
+
+      {/* REF */}
+      <div className="text-lg font-bold leading-none">
+        {t.cantidad} x {t.ref}
+      </div>
+
+      {/* DERECHA */}
+      <div className="flex items-center gap-2">
+
+        {/* ➖ ➕ SIEMPRE VISIBLES */}
+        <div className="flex gap-1 text-sm">
+          <button onClick={() => restar(t.ref)}>➖</button>
+          <button onClick={() => sumar(t.ref)}>➕</button>
+        </div>
+
+        {/* MENÚ OCULTO */}
+        <div className="relative group">
+          <button className="text-xs opacity-50">⋯</button>
+
+          <div className="absolute right-0 hidden group-hover:block bg-white border rounded shadow text-xs z-10">
+
+            <button
+              onClick={() => editarNota(t)}
+              className="block px-2 py-1 hover:bg-gray-100 w-full text-left"
+            >
+              📝 Editar
+            </button>
+
+            <button
+              onClick={() => eliminarLinea(t.ref)}
+              className="block px-2 py-1 hover:bg-red-100 w-full text-left"
+            >
+              ❌ Eliminar
+            </button>
+
+          </div>
+        </div>
+
+        {/* PRECIO */}
+        <div className="font-mono font-bold text-sm">
+          {(t.precio * t.cantidad).toFixed(2)}€
+        </div>
+
+      </div>
+    </div>
+
   {/* IZQUIERDA (ESTILO COCINA) */}
   <div className="flex flex-col flex-1">
 
@@ -914,14 +965,6 @@ if (modoCocina) {
   </div>
 
 </div>
-
-      {/* BOTONES */}
-      <div className="flex gap-1 mt-2">
-        <button onClick={() => restar(t.ref)}>➖</button>
-        <button onClick={() => sumar(t.ref)}>➕</button>
-        <button onClick={() => eliminarLinea(t.ref)}>❌</button>
-        <button onClick={() => editarNota(t)}>📝</button>
-      </div>
 
     </div>
   );
